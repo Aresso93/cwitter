@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp } from 'firebase/app';
-import { Firestore, collection, getDocs, getFirestore } from "firebase/firestore";
+import { Firestore, collection, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 import { FireappService } from './fireapp.service';
+import { OurUser } from '../model/user';
 
 
 
@@ -26,6 +27,17 @@ export class FirestoreService {
      return getDocs(coll).then(snap => snap.docs.map(doc => doc.data()
      ));
 
+    }
+
+
+    postOurUser(ourUser: OurUser, uid: string){
+      const docUrl = doc(this.db, 'users', uid);
+      return setDoc(docUrl, ourUser)
+    }
+
+    getOurUser(uid: string){
+      const docUrl = doc(this.db, 'users', uid);
+      return getDoc(docUrl)
     }
 
 
